@@ -102,9 +102,10 @@ class TextToSpeech:
                 if chunk:
                     if first_byte_time is None:
                         first_byte_time = time.time()
-                        ttfb = int((first_byte_time - start_time))
-                        st.write(f"TOTAL TTS TIME: {ttfb/1000}sec\n")
-                        # total=process.elapsed_time+ttfb
+                        ttfb = (first_byte_time - start_time)
+                        # st.session_state.ttfb = ttfb  # Store TTFB in session state
+                        st.write(f"TOTAL TTS TIME: {ttfb:4f}sec\n")
+
                     player_process.stdin.write(chunk)
                     player_process.stdin.flush()
 
@@ -205,16 +206,17 @@ class ConversationManager:
             tts = TextToSpeech()
             tts.speak(llm_response)
 
+            # Display total time
+            # total_time = st.session_state.elapsed_time + st.session_state.ttfb
+            # st.write(f"Total time: {total_time}ms")
+
             self.transcription_response = ""
 
 
 if __name__ == "__main__":
-#     manager = ConversationManager()
-#     asyncio.run(manager.main())
     st.title("Chat With AI🤖")
-    st.write("/n Please click the button below to chat with AI assistant")
+    st.write("Please click the button below to chat with the AI assistant")
 
-# Streamlit logic
     if st.button("🎤(click here and speak)"):
         st.write("Listening for your input...")
         manager = ConversationManager()
