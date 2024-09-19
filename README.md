@@ -11,5 +11,5 @@ Video tutorial coming soon
 The files in `building_blocks` are the isolated components if you'd like to inspect them
 
 ```
-python3 main.py
+streamlit run app.py
 ```
